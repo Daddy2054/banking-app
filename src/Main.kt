@@ -29,5 +29,72 @@ fun main() {
     }
 
     // Step 4: Display account type
-    println("You have created a $accountType accoount")
+    println("You have created a $accountType account")
+
+
+    //part 2
+    //Step 1: Create constants and variables
+    var accountBalance: Int = (0..1000).random()
+    println("The current balance is $accountBalance dollars.")
+    val money: Int = (0..1000).random()
+    println("The amount you transferred is $money dollars.")
+
+    //Step 2: Create a test variable
+    var output: Int = 0
+
+    // Step 3: The withdrawal operation for checking and credit bank accounts
+    fun withdraw (amount: Int): Int {
+        accountBalance -=amount
+        println("You successfully withdrew $amount. The current balance is $accountBalance dollars.")
+        return amount
+    }
+
+    // Step 4: Test the withdrawal operation
+    output = withdraw(money)
+    println("The current balance is $accountBalance dollars.")
+
+    //Step 5: The withdrawal operation for debit accounts
+    fun debitWithdraw (amount: Int): Int {
+        if (accountBalance == 0 ) {
+            println("Can't withdraw, no money on this account!")
+            return accountBalance
+        } else if (amount > accountBalance) {
+            println("Not enough money on this account! The checking balance is $accountBalance dollars.")
+            return 0
+        } else return withdraw(amount)
+    }
+
+    //Step 6: Test the withdrawal operation
+    output = debitWithdraw(money)
+    println("Test the withdrawal operation: $output")
+
+    // Step 7: The deposit operation for checking and debit accounts
+    fun deposit(amount: Int): Int {
+        accountBalance += amount
+        println("You deposited $amount dollars. The current balance is $accountBalance dollars.")
+        return amount
+    }
+
+    // Step 8: Test the deposit operation for checking and debit accounts
+    output = deposit(money)
+    println("Test the deposit operation: $output")
+
+    //Step 9: Implement the deposit operation for credit accounts
+    fun creditDeposit(amount: Int): Int {
+        if(accountBalance== 0){
+            println("You don’t need to deposit anything in order to pay off the account since it has already been paid off.")
+            return accountBalance
+        } else if (accountBalance  +amount > 0) {
+            println("Deposit failed, you tried to pay off an amount greater than the credit balance. The checking balance is ${accountBalance} dollars.")
+            return 0
+        } else if (accountBalance == -amount) {
+            println("You deposited just enough money in order to completely pay off the account in this case.")
+            return amount
+        } else return deposit(amount)
+    }
+
+    // Step 10: Test the deposit operation
+    output = creditDeposit(money)
+    println("Test the creditDeposit operation: $output")
+
 }
